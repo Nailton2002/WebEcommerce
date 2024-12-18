@@ -11,13 +11,13 @@ namespace WebEcommerce.App.Controllers;
 public class CategoryController(ICategoryService categoryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<CategoryResponse>> Create(CategoryRequest request)
+    public async Task<ActionResult<CategoryResponse>> CreateCategory(CategoryRequest request)
     {
         if (false) return BadRequest("Invalid request data.");
 
         try
         {
-            var response = await categoryService.CreateAsync(request);
+            var response = await categoryService.Create(request);
 
             return Created($"api/categories/{response.Id}", response);
         }
@@ -32,11 +32,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     }
     
     [HttpGet]
-    public async Task<ActionResult<List<CategoryResponse>>> FindAll()
+    public async Task<ActionResult<List<CategoryResponse>>> GetdAllCategory()
     {
         try
         {
-            var response = await categoryService.FindAllAsync();
+            var response = await categoryService.FindAll();
 
             return Ok(response);
         }
@@ -47,6 +47,22 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     }
     
 
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<CategoryResponse>> GetByIdCategory(int id)
+    {
+        try
+        {
+            var response = await categoryService.FindById(id);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(404, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
     
+    
+
     
 }

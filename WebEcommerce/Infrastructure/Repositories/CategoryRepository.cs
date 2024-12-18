@@ -19,4 +19,5 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
     public async Task<IEnumerable<Category>> FindAllAsync() => await dbContext.Categories.ToListAsync();
     
     
+    public async Task<Category> FindByIdAsync(int id) => await dbContext.Categories.FindAsync(id) ?? throw new InvalidOperationException();
 }

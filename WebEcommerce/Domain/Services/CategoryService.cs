@@ -7,7 +7,7 @@ namespace WebEcommerce.Domain.Services;
 
 public class CategoryService(ICategoryRepository repository) : ICategoryService
 {
-    public async Task<CategoryResponse> CreateAsync(CategoryRequest request)
+    public async Task<CategoryResponse> Create(CategoryRequest request)
     {
         try
         {
@@ -25,7 +25,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     }
 
 
-    public async Task<IEnumerable<CategoryResponse>> FindAllAsync()
+    public async Task<IEnumerable<CategoryResponse>> FindAll()
     {
         try
         {
@@ -40,6 +40,21 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
+    
+    public async Task<CategoryResponse> FindById(int id)
+    {
+        try
+        {
+            var category = await repository.FindByIdAsync(id);
 
- 
+
+            return CategoryResponse.FromCategoryToResponse(category);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
 }

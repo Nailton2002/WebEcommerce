@@ -5,9 +5,11 @@ namespace WebEcommerce.Domain.Services;
 
 public interface ICategoryService
 {
-    Task<CategoryResponse> CreateAsync(CategoryRequest request);
+    Task<CategoryResponse> Create(CategoryRequest request);
 
-    Task<IEnumerable<CategoryResponse>> FindAllAsync();
+    Task<IEnumerable<CategoryResponse>> FindAll();
+    
+    Task<CategoryResponse> FindById(int id);
     
     
     
