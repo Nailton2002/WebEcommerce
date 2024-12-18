@@ -15,7 +15,9 @@ public interface ICategoryService
     
     Task<IEnumerable<CategoryResponse>> FindByDescription(string description);
     
-    Task<IEnumerable<CategoryResponse>> FindActive();
+    Task<IEnumerable<CategoryResponse>> FindByActive();
     
-    Task<IEnumerable<CategoryResponse>> FindInactive();
+    Task<IEnumerable<CategoryResponse>> FindByInactive();
+    
+    Task<CategoryResponse> Update(int id, CategoryRequest upRequest);
 }

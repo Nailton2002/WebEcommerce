@@ -12,9 +12,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         try
         {
             var category = Category.FromRequestToCategory(request);
-
             var createCategory = await repository.CreateAsync(category);
-
             return CategoryResponse.FromCategoryToResponse(category);
         }
         catch (Exception e)
@@ -30,7 +28,6 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         try
         {
             var categories = await repository.FindAllAsync();
-
             return categories.Select(CategoryResponse.FromCategoryToResponse);
         }
         catch (Exception e)
@@ -46,8 +43,6 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         try
         {
             var category = await repository.FindByIdAsync(id);
-
-
             return CategoryResponse.FromCategoryToResponse(category);
         }
         catch (Exception e)
@@ -63,7 +58,6 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         try
         {
             var categories = await repository.FindByNameAsync(name);
-
             return categories.Select(CategoryResponse.FromCategoryToResponse);
         }
         catch (Exception e)
@@ -79,7 +73,6 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         try
         {
             var categories = await repository.FindByDescriptionAsync(description);
-
             return categories.Select(CategoryResponse.FromCategoryToResponse);
         }
         catch (Exception e)
@@ -89,12 +82,11 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
     
-    public async Task<IEnumerable<CategoryResponse>> FindActive()
+    public async Task<IEnumerable<CategoryResponse>> FindByActive()
     {
         try
         {
             var categories = await repository.FindByActiveAsync();
-
             return categories.Select(CategoryResponse.FromCategoryToResponse);
         }
         catch (Exception e)
@@ -104,13 +96,34 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
     
-    public async Task<IEnumerable<CategoryResponse>> FindInactive()
+    public async Task<IEnumerable<CategoryResponse>> FindByInactive()
     {
         try
         {
             var categories = await repository.FindByInactiveAsync();
-
             return categories.Select(CategoryResponse.FromCategoryToResponse);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    public async Task<CategoryResponse> Update( int id, CategoryRequest upRequest)
+    {
+        try
+        {
+            // Busca a categoria pelo ID
+            var category = await repository.FindByIdAsync(id);
+            //Se não existir, retorna uma exceção de chave não encontrada 
+            if (category == null) throw new KeyNotFoundException("Category not found");
+            //Pegando os dados para atualizar
+            category.UpdateCategory(upRequest);
+            // Atualiza a categoria no repositório
+            var upCategory = await repository.UpdateAsync(category);
+            // Converte a entidade atualizada em uma resposta
+            return CategoryResponse.FromCategoryToResponse(upCategory);
         }
         catch (Exception e)
         {

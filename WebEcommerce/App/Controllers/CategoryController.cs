@@ -18,7 +18,6 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         try
         {
             var response = await categoryService.Create(request);
-
             return Created($"api/categories/{response.Id}", response);
         }
         catch (ValidationException ex)
@@ -37,7 +36,6 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         try
         {
             var response = await categoryService.FindAll();
-
             return Ok(response);
         }
         catch (Exception ex)
@@ -53,7 +51,6 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         try
         {
             var response = await categoryService.FindById(id);
-
             return Ok(response);
         }
         catch (Exception ex)
@@ -69,7 +66,6 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         try
         {
             var response = await categoryService.FindByName(name);
-
             return Ok(response);
         }
         catch (Exception ex)
@@ -85,7 +81,6 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         try
         {
             var response = await categoryService.FindByDescription(description);
-
             return Ok(response);
         }
         catch (Exception ex)
@@ -96,12 +91,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
 
     
     [HttpGet("active")]
-    public async Task<IActionResult> GetActiveAsync()
+    public async Task<IActionResult> GetActiveAsyncCategory()
     {
         try
         {
-            var response = await categoryService.FindActive();
-
+            var response = await categoryService.FindByActive();
             return Ok(response);
         }
         catch (Exception ex)
@@ -111,17 +105,30 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     } 
     
     [HttpGet("inactive")]
-    public async Task<IActionResult> GetInactive()
+    public async Task<IActionResult> GetInactiveCategory()
     {
         try
         {
-            var response = await categoryService.FindInactive();
-
+            var response = await categoryService.FindByInactive();
             return Ok(response);
         }
         catch (Exception ex)
         {
             return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+    
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<CategoryResponse>> UpdateCategory(int id, CategoryRequest upRequest)
+    {
+        try
+        {
+            var response = await categoryService.Update(id, upRequest);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(404, new { Error = "An unexpected error occurred.", Details = ex.Message });
         }
     }
 }

@@ -38,4 +38,11 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
             .Where(c => !c.Active) // Filtra categorias inativas
             .ToListAsync();
     }
+    
+    public async Task<Category> UpdateAsync(Category category)
+    {
+        if (category.Id != 0) dbContext.Categories.Update(category);
+        await dbContext.SaveChangesAsync();
+        return category;
+    }
 }
