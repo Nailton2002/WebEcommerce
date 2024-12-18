@@ -37,7 +37,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
-    
+
     public async Task<CategoryResponse> FindById(int id)
     {
         try
@@ -52,7 +52,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
-    
+
     public async Task<IEnumerable<CategoryResponse>> FindByName(string name)
     {
         try
@@ -67,7 +67,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
-  
+
     public async Task<IEnumerable<CategoryResponse>> FindByDescription(string description)
     {
         try
@@ -81,7 +81,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
-    
+
     public async Task<IEnumerable<CategoryResponse>> FindByActive()
     {
         try
@@ -95,7 +95,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
-    
+
     public async Task<IEnumerable<CategoryResponse>> FindByInactive()
     {
         try
@@ -109,8 +109,8 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
-    
-    public async Task<CategoryResponse> Update( int id, CategoryRequest upRequest)
+
+    public async Task<CategoryResponse> Update(int id, CategoryRequest upRequest)
     {
         try
         {
@@ -124,6 +124,29 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             var upCategory = await repository.UpdateAsync(category);
             // Converte a entidade atualizada em uma resposta
             return CategoryResponse.FromCategoryToResponse(upCategory);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<CategoryResponse> DesableActiveCategory(int id)
+    {
+        try
+        {
+            var category = await repository.FindByIdAsync(id);
+            if (category == null)
+            {
+                throw new KeyNotFoundException("Category not found");
+            }
+            //Passa a ativação de verdadeira para falsa
+            category.DesableActiveCategory();
+            // Atualizada os dados referentes
+            await repository.UpdateAsync(category);
+            // Converte a entidade atualizada em uma resposta
+            return CategoryResponse.FromCategoryToResponse(category);
         }
         catch (Exception e)
         {

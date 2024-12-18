@@ -30,4 +30,9 @@ public class Category
         if (upRequest.Name != null) Name = upRequest.Name;
         if (upRequest.Description != null) Description = upRequest.Description;
     }
+    
+    public void DesableActiveCategory()
+    {
+        Active = false;
+    }
 }

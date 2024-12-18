@@ -131,4 +131,20 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
             return StatusCode(404, new { Error = "An unexpected error occurred.", Details = ex.Message });
         }
     }
+    
+    
+    [HttpPatch("{id:int}")]
+    public async Task<ActionResult> DesableActiveCategory(int id)
+    {
+        try
+        {
+            var response = await categoryService.FindById(id);
+            await categoryService.DesableActiveCategory(id);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(404, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
 }

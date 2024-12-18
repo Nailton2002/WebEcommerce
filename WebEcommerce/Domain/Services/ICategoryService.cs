@@ -20,4 +20,6 @@ public interface ICategoryService
     Task<IEnumerable<CategoryResponse>> FindByInactive();
     
     Task<CategoryResponse> Update(int id, CategoryRequest upRequest);
+    
+    Task<CategoryResponse>  DesableActiveCategory(int id);
 }
