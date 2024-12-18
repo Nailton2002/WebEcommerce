@@ -103,4 +103,19 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
+    
+    public async Task<IEnumerable<CategoryResponse>> FindInactive()
+    {
+        try
+        {
+            var categories = await repository.FindByInactiveAsync();
+
+            return categories.Select(CategoryResponse.FromCategoryToResponse);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

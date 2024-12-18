@@ -31,4 +31,11 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
             .Where(c => c.Active) // Filtra categorias ativas
             .ToListAsync();
     }
+    
+    public async Task<IEnumerable<Category>> FindByInactiveAsync()
+    {
+        return await dbContext.Categories
+            .Where(c => !c.Active) // Filtra categorias inativas
+            .ToListAsync();
+    }
 }

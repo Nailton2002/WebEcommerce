@@ -109,4 +109,19 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
             return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
         }
     } 
+    
+    [HttpGet("inactive")]
+    public async Task<IActionResult> GetInactive()
+    {
+        try
+        {
+            var response = await categoryService.FindInactive();
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
 }

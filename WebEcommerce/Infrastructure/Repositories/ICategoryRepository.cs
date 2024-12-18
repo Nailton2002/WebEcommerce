@@ -15,4 +15,6 @@ public interface ICategoryRepository
     Task<IEnumerable<Category>> FindByDescriptionAsync(string description);
     
     Task<IEnumerable<Category>> FindByActiveAsync();
+    
+    Task<IEnumerable<Category>> FindByInactiveAsync();
 }

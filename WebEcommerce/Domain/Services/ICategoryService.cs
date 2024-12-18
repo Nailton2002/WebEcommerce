@@ -16,4 +16,6 @@ public interface ICategoryService
     Task<IEnumerable<CategoryResponse>> FindByDescription(string description);
     
     Task<IEnumerable<CategoryResponse>> FindActive();
+    
+    Task<IEnumerable<CategoryResponse>> FindInactive();
 }
