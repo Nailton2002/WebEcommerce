@@ -74,4 +74,18 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     }
 
   
+    public async Task<IEnumerable<CategoryResponse>> FindByDescription(string description)
+    {
+        try
+        {
+            var categories = await repository.FindByDescriptionAsync(description);
+
+            return categories.Select(CategoryResponse.FromCategoryToResponse);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

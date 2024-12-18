@@ -12,5 +12,5 @@ public interface ICategoryRepository
     
     Task<IEnumerable<Category>> FindByNameAsync(string name);
     
-
+    Task<IEnumerable<Category>> FindByDescriptionAsync(string description);
 }

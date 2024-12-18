@@ -10,8 +10,8 @@ using WebEcommerce.Infrastructure.Data;
 namespace WebEcommerce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241218171008_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241218195217_Create")]
+    partial class Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace WebEcommerce.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Descricao")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
 

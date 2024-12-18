@@ -14,4 +14,5 @@ public interface ICategoryService
     Task<IEnumerable<CategoryResponse>> FindByName(string name);
 
 
+    Task<IEnumerable<CategoryResponse>> FindByDescription(string description);
 }

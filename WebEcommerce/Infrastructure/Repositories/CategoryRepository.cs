@@ -9,9 +9,7 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
     public async Task<Category> CreateAsync(Category category)
     {
         dbContext.Categories.Add(category);
-
         await dbContext.SaveChangesAsync();
-
         return category;
     }
     
@@ -21,5 +19,9 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
     
     public async Task<IEnumerable<Category>> FindByNameAsync(string name) => await dbContext.Categories
             .Where(u => u.Name.Contains(name)) // Filtra categoria por nome
+            .ToListAsync();
+    
+    public async Task<IEnumerable<Category>> FindByDescriptionAsync(string description) => await dbContext.Categories
+            .Where(u => u.Description.Contains(description)) // Filtra categoria por descrição
             .ToListAsync();
 }
