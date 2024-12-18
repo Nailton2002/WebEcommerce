@@ -9,4 +9,8 @@ public interface ICategoryRepository
     Task<IEnumerable<Category>> FindAllAsync();
     
     Task<Category> FindByIdAsync(int id);
+    
+    Task<IEnumerable<Category>> FindByNameAsync(string name);
+    
+
 }

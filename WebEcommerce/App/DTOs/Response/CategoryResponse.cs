@@ -8,7 +8,7 @@ public class CategoryResponse
 
     public string Name { get; set; }
 
-    public string Descricao { get; set; }
+    public string Description { get; set; }
 
     public bool Active { get; set; }
 
@@ -20,7 +20,7 @@ public class CategoryResponse
         {
             Id = category.Id,
             Name = category.Name,
-            Descricao = category.Descricao,
+            Description = category.Description,
             Active = category.Active,
         };
     }

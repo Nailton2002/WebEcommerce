@@ -63,6 +63,22 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     }
     
     
+    [HttpGet("name")]
+    public async Task<ActionResult<CategoryResponse>> GetByNameCategory([FromQuery] string name)
+    {
+        try
+        {
+            var response = await categoryService.FindByName(name);
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+
+    
 
     
 }

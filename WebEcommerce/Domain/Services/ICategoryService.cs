@@ -10,7 +10,8 @@ public interface ICategoryService
     Task<IEnumerable<CategoryResponse>> FindAll();
     
     Task<CategoryResponse> FindById(int id);
-    
-    
-    
+
+    Task<IEnumerable<CategoryResponse>> FindByName(string name);
+
+
 }
