@@ -30,4 +30,23 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
             return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
         }
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<List<CategoryResponse>>> FindAll()
+    {
+        try
+        {
+            var response = await categoryService.FindAllAsync();
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+    
+
+    
+    
 }

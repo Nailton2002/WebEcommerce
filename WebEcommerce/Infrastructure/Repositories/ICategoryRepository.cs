@@ -5,4 +5,7 @@ namespace WebEcommerce.Infrastructure.Repositories;
 public interface ICategoryRepository
 {
     Task<Category> CreateAsync(Category category);
+    
+    Task<IEnumerable<Category>> FindAllAsync();
+    
 }

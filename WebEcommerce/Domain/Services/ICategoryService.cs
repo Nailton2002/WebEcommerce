@@ -6,4 +6,9 @@ namespace WebEcommerce.Domain.Services;
 public interface ICategoryService
 {
     Task<CategoryResponse> CreateAsync(CategoryRequest request);
+
+    Task<IEnumerable<CategoryResponse>> FindAllAsync();
+    
+    
+    
 }

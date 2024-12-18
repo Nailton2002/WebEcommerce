@@ -16,7 +16,6 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             var createCategory = await repository.CreateAsync(category);
 
             return CategoryResponse.FromCategoryToResponse(category);
-
         }
         catch (Exception e)
         {
@@ -24,4 +23,23 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
+
+
+    public async Task<IEnumerable<CategoryResponse>> FindAllAsync()
+    {
+        try
+        {
+            var categories = await repository.FindAllAsync();
+
+            return categories.Select(CategoryResponse.FromCategoryToResponse);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+
+ 
 }
