@@ -12,7 +12,8 @@ public interface ICategoryService
     Task<CategoryResponse> FindById(int id);
 
     Task<IEnumerable<CategoryResponse>> FindByName(string name);
-
-
+    
     Task<IEnumerable<CategoryResponse>> FindByDescription(string description);
+    
+    Task<IEnumerable<CategoryResponse>> FindActive();
 }

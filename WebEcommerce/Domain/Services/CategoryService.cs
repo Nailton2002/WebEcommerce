@@ -88,4 +88,19 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
+    
+    public async Task<IEnumerable<CategoryResponse>> FindActive()
+    {
+        try
+        {
+            var categories = await repository.FindByActiveAsync();
+
+            return categories.Select(CategoryResponse.FromCategoryToResponse);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

@@ -80,7 +80,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
 
     
     [HttpGet("description")]
-    public async Task<IActionResult> FindByDescriptionCategory([FromQuery] string description)
+    public async Task<IActionResult> GetByDescriptionCategory([FromQuery] string description)
     {
         try
         {
@@ -95,4 +95,18 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     } 
 
     
+    [HttpGet("active")]
+    public async Task<IActionResult> GetActiveAsync()
+    {
+        try
+        {
+            var response = await categoryService.FindActive();
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    } 
 }

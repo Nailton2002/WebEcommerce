@@ -24,4 +24,11 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
     public async Task<IEnumerable<Category>> FindByDescriptionAsync(string description) => await dbContext.Categories
             .Where(u => u.Description.Contains(description)) // Filtra categoria por descrição
             .ToListAsync();
+    
+    public async Task<IEnumerable<Category>> FindByActiveAsync()
+    {
+        return await dbContext.Categories
+            .Where(c => c.Active) // Filtra categorias ativas
+            .ToListAsync();
+    }
 }
