@@ -7,5 +7,8 @@ public interface IProductService
 {
     Task<ProductResponse> CreateAsync(ProductRequest request);
 
+    Task<IEnumerable<ProductResponse>> FindAllAsync();
+    
     Task<ProductResponse> FindByIdAsync(int id);
+    
 }

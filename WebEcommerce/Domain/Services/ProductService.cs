@@ -36,6 +36,20 @@ public class ProductService : IProductService
             throw;
         }
     }
+    
+    public async Task<IEnumerable<ProductResponse>> FindAllAsync()
+    {
+        try
+        {
+            var products = await _repository.FindAllAsync();
+            return products.Select(product => ProductResponse.FromProductToResponse(product));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 
     public async Task<ProductResponse> FindByIdAsync(int id)
     {

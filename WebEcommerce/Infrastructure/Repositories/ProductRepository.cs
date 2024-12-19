@@ -23,6 +23,10 @@ public class ProductRepository : IProductRepository
         return product;
     }
 
+    
+    public async Task<IEnumerable<Product>> FindAllAsync() =>
+        await _dbContext.Products.Include(p => p.Category).ToListAsync();
+
 
     public async Task<Product> FindByIdAsync(int id) =>
         await _dbContext.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id) ??

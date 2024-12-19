@@ -46,6 +46,26 @@ public class ProductController : ControllerBase
         }
     }
 
+    [HttpGet]
+    public async Task<ActionResult<List<ProductResponse>>> GetAllProduct()
+    {
+        try
+        {
+            var response = await _productService.FindAllAsync();
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+    
+    
     [HttpGet("{id:int}")]
     public async Task<ActionResult<ProductResponse>> GetByIdProduct(int id)
     {
@@ -65,7 +85,6 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Retorna erro genérico com mensagem detalhada para desenvolvimento, pode ser ajustado para produção
             return StatusCode(500, new
             {
                 Error = "An unexpected error occurred.",
@@ -73,4 +92,5 @@ public class ProductController : ControllerBase
             });
         }
     }
+    
 }
