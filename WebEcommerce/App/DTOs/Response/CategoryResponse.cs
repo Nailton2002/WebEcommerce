@@ -12,7 +12,10 @@ public class CategoryResponse
 
     public bool Active { get; set; }
 
+    // Lista de produtos na resposta, usando DTO para encapsulamento
+    public ICollection<ProductResponse>? Products { get; set; }
 
+    
     // Método estático que converte a entidade `Category` para `CategoryResponse`
     public static CategoryResponse FromCategoryToResponse(Category category)
     {
@@ -22,6 +25,7 @@ public class CategoryResponse
             Name = category.Name,
             Description = category.Description,
             Active = category.Active,
+            Products = category.Products?.Select(ProductResponse.FromProductToResponse).ToList()
         };
     }
 }

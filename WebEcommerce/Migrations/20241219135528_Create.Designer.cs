@@ -10,7 +10,7 @@ using WebEcommerce.Infrastructure.Data;
 namespace WebEcommerce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241218195217_Create")]
+    [Migration("20241219135528_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -41,6 +41,45 @@ namespace WebEcommerce.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("WebEcommerce.Domain.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("WebEcommerce.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("WebEcommerce.Domain.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("WebEcommerce.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,11 @@ public class Category
     public string Description { get; set; }
 
     public bool Active { get; set; }
-    
-    
+
+    [JsonIgnore] 
+    public ICollection<Product> Products { get; set; }
+
+
     // Método estático que converte a CategoryRequest `Category` para `entidade`
     public static Category FromRequestToCategory(CategoryRequest request)
     {
@@ -28,9 +31,10 @@ public class Category
     public void UpdateCategory(CategoryRequest upRequest)
     {
         if (upRequest.Name != null) Name = upRequest.Name;
+
         if (upRequest.Description != null) Description = upRequest.Description;
     }
-    
+
     public void DesableActiveCategory()
     {
         Active = false;
