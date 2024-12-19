@@ -154,4 +154,26 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
+    
+    public async Task DeleteDisableCategory(int id)
+    {
+        try
+        {
+            var category = await repository.FindByIdAsync(id);
+            if (category == null)
+            {
+                throw new KeyNotFoundException("Category not found");
+            }
+            if (category.Active)
+            {
+                throw new Exception("Category is active and cannot be deleted");
+            }
+            await repository.DeleteAsync(category);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

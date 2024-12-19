@@ -45,4 +45,10 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
         await dbContext.SaveChangesAsync();
         return category;
     }
+    
+    public async Task DeleteAsync(Category category)
+    {
+        dbContext.Categories.Remove(category);
+        await dbContext.SaveChangesAsync();
+    }
 }

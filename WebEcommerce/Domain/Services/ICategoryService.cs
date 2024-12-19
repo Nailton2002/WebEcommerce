@@ -22,4 +22,6 @@ public interface ICategoryService
     Task<CategoryResponse> Update(int id, CategoryRequest upRequest);
     
     Task<CategoryResponse>  DesableActiveCategory(int id);
+    
+    Task DeleteDisableCategory(int id);
 }

@@ -19,4 +19,6 @@ public interface ICategoryRepository
     Task<IEnumerable<Category>> FindByInactiveAsync();
     
     Task<Category> UpdateAsync(Category category);
+    
+    Task DeleteAsync(Category category);
 }

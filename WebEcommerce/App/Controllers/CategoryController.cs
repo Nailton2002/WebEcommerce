@@ -132,7 +132,6 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         }
     }
     
-    
     [HttpPatch("{id:int}")]
     public async Task<ActionResult> DesableActiveCategory(int id)
     {
@@ -145,6 +144,22 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         catch (Exception ex)
         {
             return StatusCode(404, new { Error = "An unexpected error occurred.", Details = ex.Message });
+        }
+    }
+    
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteCategory(int id)
+    {
+        try
+        {
+            await categoryService.FindById(id);
+            await categoryService.DeleteDisableCategory(id);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
         }
     }
 }
