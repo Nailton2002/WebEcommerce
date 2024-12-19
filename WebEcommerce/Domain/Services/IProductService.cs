@@ -12,4 +12,6 @@ public interface IProductService
     Task<ProductResponse> FindByIdAsync(int id);
 
     Task<ProductResponse> UpdateAsync(int id, ProductRequest request);
+
+    Task DeleteAsync(int id);
 }

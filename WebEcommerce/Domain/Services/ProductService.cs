@@ -95,4 +95,20 @@ public class ProductService : IProductService
             throw;
         }
     }
+
+    public async Task DeleteAsync(int id)
+    {
+        if (id <= 0) throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
+        try
+        {
+            var product = await _repository.FindByIdAsync(id);
+            if (product == null) throw new KeyNotFoundException("Product not found");
+            await _repository.DeleteAsync(product);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }
