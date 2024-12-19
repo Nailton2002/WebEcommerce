@@ -26,6 +26,7 @@ public class ProductService : IProductService
             {
                 throw new ValidationException($"O produto com o nome '{request.Name}' já existe.");
             }
+
             var product = Product.FromRequestToProduct(request);
             var createdProduct = await _repository.CreateAsync(product);
             return ProductResponse.FromProductToResponse(createdProduct);
@@ -36,7 +37,7 @@ public class ProductService : IProductService
             throw;
         }
     }
-    
+
     public async Task<IEnumerable<ProductResponse>> FindAllAsync()
     {
         try
@@ -57,14 +58,15 @@ public class ProductService : IProductService
         {
             throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
         }
+
         try
         {
-            // Recupera o produto pelo ID
             var product = await _repository.FindByIdAsync(id);
             if (product == null)
             {
                 throw new KeyNotFoundException($"Produto com ID {id} não foi encontrado.");
             }
+
             return ProductResponse.FromProductToResponse(product);
         }
         catch (Exception ex)
@@ -72,6 +74,25 @@ public class ProductService : IProductService
             // Opcional: registrar o erro para diagnóstico
             Console.Error.WriteLine($"Erro ao buscar produto com ID {id}: {ex.Message}");
             throw; // Re-lança a exceção para ser tratada em níveis superiores
+        }
+    }
+
+
+    public async Task<ProductResponse> UpdateAsync(int id, ProductRequest upRequest)
+    {
+        if (id <= 0) throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
+        try
+        {
+            var product = await _repository.FindByIdAsync(id);
+            if (product == null) throw new KeyNotFoundException("Product not found");
+            product.UpdateProduct(upRequest);
+            var upProduct = await _repository.UpdateAsync(product);
+            return ProductResponse.FromProductToResponse(upProduct);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

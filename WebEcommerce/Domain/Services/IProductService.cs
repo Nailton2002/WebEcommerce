@@ -10,5 +10,6 @@ public interface IProductService
     Task<IEnumerable<ProductResponse>> FindAllAsync();
     
     Task<ProductResponse> FindByIdAsync(int id);
-    
+
+    Task<ProductResponse> UpdateAsync(int id, ProductRequest request);
 }

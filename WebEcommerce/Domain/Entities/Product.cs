@@ -5,16 +5,16 @@ namespace WebEcommerce.Domain.Entities;
 public class Product
 {
     public int Id { get; set; }
-    
+
     public string Name { get; set; }
-    
+
     public decimal Price { get; set; }
-    
+
     public int CategoryId { get; set; }
-    
+
     public Category Category { get; set; }
-    
-    
+
+
     // Método estático que converte DTO ProductRequest para `entidade` `Product`
     public static Product FromRequestToProduct(ProductRequest request)
     {
@@ -24,5 +24,12 @@ public class Product
             Price = request.Price,
             CategoryId = request.CategoryId
         };
+    }
+
+    public void UpdateProduct(ProductRequest upRequest)
+    {
+        if (upRequest != null) Name = upRequest.Name;
+        if (upRequest != null) Price = upRequest.Price;
+        if (upRequest != null) CategoryId = upRequest.CategoryId;
     }
 }

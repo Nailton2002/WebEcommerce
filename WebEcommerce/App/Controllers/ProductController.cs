@@ -26,18 +26,14 @@ public class ProductController : ControllerBase
         try
         {
             var response = await _productService.CreateAsync(request);
-
-            // Retorna a rota correta usando nameof e o ID do recurso criado
             return Created($"products/{ response.Id }", response);
         }
         catch (ValidationException ex)
         {
-            // Retorna erro de validação com mensagem detalhada
             return UnprocessableEntity(new { Error = ex.Message });
         }
         catch (Exception ex)
         {
-            // Retorna erro genérico com mensagem de detalhe para depuração
             return StatusCode(500, new
             {
                 Error = "An unexpected error occurred.",
@@ -46,6 +42,7 @@ public class ProductController : ControllerBase
         }
     }
 
+    
     [HttpGet]
     public async Task<ActionResult<List<ProductResponse>>> GetAllProduct()
     {
@@ -90,6 +87,26 @@ public class ProductController : ControllerBase
                 Error = "An unexpected error occurred.",
                 Details = ex.Message
             });
+        }
+    }
+    
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<ProductResponse>> UpdateProduct(int id, ProductRequest request)
+    {
+        try
+        {
+            var response = await _productService.UpdateAsync(id, request);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
         }
     }
     

@@ -39,4 +39,14 @@ public class ProductRepository : IProductRepository
     }
     
     
+    public async Task<Product> UpdateAsync(Product product)
+    {
+        if (product.Id != 0) _dbContext.Products.Update(product);
+
+        await _dbContext.SaveChangesAsync();
+
+        return product;
+    }
+    
+
 }

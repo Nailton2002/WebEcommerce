@@ -11,5 +11,6 @@ public interface IProductRepository
     Task<Product> FindByIdAsync(int id);
 
     Task<Product> FindByNameAsync(string name);
-    
+
+    Task<Product> UpdateAsync(Product updatedProduct);
 }
