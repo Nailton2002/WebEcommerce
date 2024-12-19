@@ -15,10 +15,15 @@ public class CategoryResponse
     // Lista de produtos na resposta, usando DTO para encapsulamento
     public ICollection<ProductResponse>? Products { get; set; }
 
-    
+
+
     // Método estático que converte a entidade `Category` para `CategoryResponse`
     public static CategoryResponse FromCategoryToResponse(Category category)
     {
+        if (category == null)
+        {
+            throw new ArgumentNullException(nameof(category), "A categoria não pode ser nula.");
+        }
         return new CategoryResponse
         {
             Id = category.Id,

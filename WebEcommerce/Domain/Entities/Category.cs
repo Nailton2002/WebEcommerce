@@ -12,8 +12,7 @@ public class Category
     public string Description { get; set; }
 
     public bool Active { get; set; }
-
-    [JsonIgnore] 
+    
     public ICollection<Product> Products { get; set; }
 
 

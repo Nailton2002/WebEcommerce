@@ -18,7 +18,7 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         try
         {
             var response = await categoryService.Create(request);
-            return Created($"api/categories/{response.Id}", response);
+            return Created($"categories/{response.Id}", response);
         }
         catch (ValidationException ex)
         {

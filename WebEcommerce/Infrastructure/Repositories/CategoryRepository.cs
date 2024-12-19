@@ -13,10 +13,30 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
         return category;
     }
     
-    public async Task<IEnumerable<Category>> FindAllAsync() => await dbContext.Categories.ToListAsync();
+    public async Task<IEnumerable<Category>> GetAllAsync()
+    {
+        return await dbContext.Categories
+            .Include(c => c.Products) // Garante o carregamento dos produtos
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Category>> FindAllAsync()
+    {
+        return await dbContext.Categories
+            // Garante o carregamento dos produtos
+            .Include(c => c.Products)
+            .ToListAsync();
+    } 
     
-    public async Task<Category> FindByIdAsync(int id) => await dbContext.Categories.FindAsync(id) ?? throw new InvalidOperationException();
     
+    public async Task<Category> FindByIdAsync(int id)
+    {
+        
+        return await dbContext.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
+    }
+
     public async Task<IEnumerable<Category>> FindByNameAsync(string name) => await dbContext.Categories
             .Where(u => u.Name.Contains(name)) // Filtra categoria por nome
             .ToListAsync();

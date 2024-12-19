@@ -6,6 +6,8 @@ using WebEcommerce.Domain.Services;
 
 namespace WebEcommerce.App.Controllers;
 
+[ApiController]
+[Route("products")]
 public class ProductController : ControllerBase
 {
     private readonly IProductService _productService;
@@ -26,7 +28,7 @@ public class ProductController : ControllerBase
             var response = await _productService.CreateAsync(request);
 
             // Retorna a rota correta usando nameof e o ID do recurso criado
-            return CreatedAtAction(nameof(CreateProduct), new { id = response.Id }, response);
+            return Created($"products/{ response.Id }", response);
         }
         catch (ValidationException ex)
         {
@@ -36,6 +38,34 @@ public class ProductController : ControllerBase
         catch (Exception ex)
         {
             // Retorna erro genérico com mensagem de detalhe para depuração
+            return StatusCode(500, new
+            {
+                Error = "An unexpected error occurred.",
+                Details = ex.Message
+            });
+        }
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<ProductResponse>> GetByIdProduct(int id)
+    {
+        if (id <= 0)
+        {
+            return BadRequest(new { Error = "The provided ID must be greater than 0." });
+        }
+        try
+        {
+            var response = await _productService.FindByIdAsync(id);
+            if (response == null)
+            {
+                return NotFound(new { Error = $"No product found with ID {id}." });
+            }
+
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            // Retorna erro genérico com mensagem detalhada para desenvolvimento, pode ser ajustado para produção
             return StatusCode(500, new
             {
                 Error = "An unexpected error occurred.",
