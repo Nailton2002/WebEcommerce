@@ -5,21 +5,21 @@ namespace WebEcommerce.Domain.Services;
 
 public interface ICategoryService
 {
-    Task<CategoryResponse> Create(CategoryRequest request);
+    Task<CategoryResponse> CreateCategory(CategoryRequest request);
 
-    Task<IEnumerable<CategoryResponse>> FindAll();
+    Task<IEnumerable<CategoryResponse>> FindAllCategory();
     
-    Task<CategoryResponse> FindById(int id);
+    Task<CategoryResponse> FindByIdCategory(int id);
 
-    Task<IEnumerable<CategoryResponse>> FindByName(string name);
+    Task<IEnumerable<CategoryResponse>> FindByNameCategory(string name);
     
-    Task<IEnumerable<CategoryResponse>> FindByDescription(string description);
+    Task<IEnumerable<CategoryResponse>> FindByDescriptionCategory(string description);
     
-    Task<IEnumerable<CategoryResponse>> FindByActive();
+    Task<IEnumerable<CategoryResponse>> FindByActiveCategory();
     
-    Task<IEnumerable<CategoryResponse>> FindByInactive();
+    Task<IEnumerable<CategoryResponse>> FindByInactiveCategory();
     
-    Task<CategoryResponse> Update(int id, CategoryRequest upRequest);
+    Task<CategoryResponse> UpdateCategory(int id, CategoryRequest upRequest);
     
     Task<CategoryResponse>  DesableActiveCategory(int id);
     

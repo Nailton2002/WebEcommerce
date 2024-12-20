@@ -7,7 +7,7 @@ namespace WebEcommerce.Domain.Services;
 
 public class CategoryService(ICategoryRepository repository) : ICategoryService
 {
-    public async Task<CategoryResponse> Create(CategoryRequest request)
+    public async Task<CategoryResponse> CreateCategory(CategoryRequest request)
     {
         try
         {
@@ -23,7 +23,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     }
 
 
-    public async Task<IEnumerable<CategoryResponse>> FindAll()
+    public async Task<IEnumerable<CategoryResponse>> FindAllCategory()
     {
         try
         {
@@ -38,7 +38,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     }
 
 
-    public async Task<CategoryResponse> FindById(int id)
+    public async Task<CategoryResponse> FindByIdCategory(int id)
     {
         try
         {
@@ -53,7 +53,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     }
 
 
-    public async Task<IEnumerable<CategoryResponse>> FindByName(string name)
+    public async Task<IEnumerable<CategoryResponse>> FindByNameCategory(string name)
     {
         try
         {
@@ -68,7 +68,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
     }
 
 
-    public async Task<IEnumerable<CategoryResponse>> FindByDescription(string description)
+    public async Task<IEnumerable<CategoryResponse>> FindByDescriptionCategory(string description)
     {
         try
         {
@@ -82,7 +82,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
-    public async Task<IEnumerable<CategoryResponse>> FindByActive()
+    public async Task<IEnumerable<CategoryResponse>> FindByActiveCategory()
     {
         try
         {
@@ -96,7 +96,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
-    public async Task<IEnumerable<CategoryResponse>> FindByInactive()
+    public async Task<IEnumerable<CategoryResponse>> FindByInactiveCategory()
     {
         try
         {
@@ -110,7 +110,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
         }
     }
 
-    public async Task<CategoryResponse> Update(int id, CategoryRequest upRequest)
+    public async Task<CategoryResponse> UpdateCategory(int id, CategoryRequest upRequest)
     {
         try
         {

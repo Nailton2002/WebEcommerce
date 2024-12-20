@@ -11,13 +11,13 @@ namespace WebEcommerce.App.Controllers;
 public class CategoryController(ICategoryService categoryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<CategoryResponse>> CreateCategory(CategoryRequest request)
+    public async Task<ActionResult<CategoryResponse>> Create(CategoryRequest request)
     {
         if (false) return BadRequest("Invalid request data.");
 
         try
         {
-            var response = await categoryService.Create(request);
+            var response = await categoryService.CreateCategory(request);
             return Created($"categories/{response.Id}", response);
         }
         catch (ValidationException ex)
@@ -31,11 +31,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     }
     
     [HttpGet]
-    public async Task<ActionResult<List<CategoryResponse>>> GetdAllCategory()
+    public async Task<ActionResult<List<CategoryResponse>>> GetdAll()
     {
         try
         {
-            var response = await categoryService.FindAll();
+            var response = await categoryService.FindAllCategory();
             return Ok(response);
         }
         catch (Exception ex)
@@ -46,11 +46,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<CategoryResponse>> GetByIdCategory(int id)
+    public async Task<ActionResult<CategoryResponse>> GetById(int id)
     {
         try
         {
-            var response = await categoryService.FindById(id);
+            var response = await categoryService.FindByIdCategory(id);
             return Ok(response);
         }
         catch (Exception ex)
@@ -61,11 +61,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     
     
     [HttpGet("name")]
-    public async Task<ActionResult<CategoryResponse>> GetByNameCategory([FromQuery] string name)
+    public async Task<ActionResult<CategoryResponse>> GetByName([FromQuery] string name)
     {
         try
         {
-            var response = await categoryService.FindByName(name);
+            var response = await categoryService.FindByNameCategory(name);
             return Ok(response);
         }
         catch (Exception ex)
@@ -76,11 +76,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
 
     
     [HttpGet("description")]
-    public async Task<IActionResult> GetByDescriptionCategory([FromQuery] string description)
+    public async Task<IActionResult> GetByDescription([FromQuery] string description)
     {
         try
         {
-            var response = await categoryService.FindByDescription(description);
+            var response = await categoryService.FindByDescriptionCategory(description);
             return Ok(response);
         }
         catch (Exception ex)
@@ -91,11 +91,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
 
     
     [HttpGet("active")]
-    public async Task<IActionResult> GetActiveAsyncCategory()
+    public async Task<IActionResult> GetActiveAsync()
     {
         try
         {
-            var response = await categoryService.FindByActive();
+            var response = await categoryService.FindByActiveCategory();
             return Ok(response);
         }
         catch (Exception ex)
@@ -105,11 +105,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     } 
     
     [HttpGet("inactive")]
-    public async Task<IActionResult> GetInactiveCategory()
+    public async Task<IActionResult> GetInactive()
     {
         try
         {
-            var response = await categoryService.FindByInactive();
+            var response = await categoryService.FindByInactiveCategory();
             return Ok(response);
         }
         catch (Exception ex)
@@ -119,11 +119,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     }
     
     [HttpPut("{id:int}")]
-    public async Task<ActionResult<CategoryResponse>> UpdateCategory(int id, CategoryRequest upRequest)
+    public async Task<ActionResult<CategoryResponse>> Update(int id, CategoryRequest upRequest)
     {
         try
         {
-            var response = await categoryService.Update(id, upRequest);
+            var response = await categoryService.UpdateCategory(id, upRequest);
             return Ok(response);
         }
         catch (Exception ex)
@@ -133,11 +133,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     }
     
     [HttpPatch("{id:int}")]
-    public async Task<ActionResult> DesableActiveCategory(int id)
+    public async Task<ActionResult> DesableActive(int id)
     {
         try
         {
-            var response = await categoryService.FindById(id);
+            var response = await categoryService.FindByIdCategory(id);
             await categoryService.DesableActiveCategory(id);
             return Ok(response);
         }
@@ -149,11 +149,11 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
     
 
     [HttpDelete("{id:int}")]
-    public async Task<ActionResult> DeleteCategory(int id)
+    public async Task<ActionResult> Delete(int id)
     {
         try
         {
-            await categoryService.FindById(id);
+            await categoryService.FindByIdCategory(id);
             await categoryService.DeleteDisableCategory(id);
             return NoContent();
         }

@@ -10,7 +10,9 @@ public interface IProductRepository
     
     Task<Product> FindByIdAsync(int id);
 
-    Task<Product> FindByNameAsync(string name);
+    Task<IEnumerable<Product>> FindByNameAsync(string name);
+    
+    Task<Product> SearchForSameNames(string name);
 
     Task<Product> UpdateAsync(Product updatedProduct);
 

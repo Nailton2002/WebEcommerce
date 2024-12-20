@@ -33,7 +33,24 @@ public class ProductRepository : IProductRepository
         throw new InvalidOperationException();
 
 
-    public async Task<Product> FindByNameAsync(string name)
+    public async Task<IEnumerable<Product>> FindByNameAsync(string name)
+    {
+        try
+        {
+            return await _dbContext.Products
+                .Include(p => p.Category) // Carrega a categoria relacionada
+                .Where(u => u.Name.Contains(name))
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Erro ao buscar produtos no banco de dados.", ex);
+        }
+    }
+
+
+
+    public async Task<Product> SearchForSameNames(string name)
     {
         return await _dbContext.Products.FirstOrDefaultAsync(p => p.Name == name);
     }

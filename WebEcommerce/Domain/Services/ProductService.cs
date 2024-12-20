@@ -15,13 +15,11 @@ public class ProductService : IProductService
         _repository = repository;
     }
 
-    public async Task<ProductResponse> CreateAsync(ProductRequest request)
+    public async Task<ProductResponse> CreateProduct(ProductRequest request)
     {
         try
         {
-            // Verifica se o nome do produto já existe
-            var existingProduct = await _repository.FindByNameAsync(request.Name);
-            //Se já existe lança uma exceção
+            var existingProduct = await _repository.SearchForSameNames(request.Name);
             if (existingProduct != null)
             {
                 throw new ValidationException($"O produto com o nome '{request.Name}' já existe.");
@@ -38,7 +36,7 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<IEnumerable<ProductResponse>> FindAllAsync()
+    public async Task<IEnumerable<ProductResponse>> FindAllProduct()
     {
         try
         {
@@ -52,7 +50,54 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<ProductResponse> FindByIdAsync(int id)
+    public async Task<IEnumerable<ProductResponse>> FindByNameProduct(string name)
+    {
+        try
+        {
+            // Validação do nome (regra de negócio)
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("O nome não pode ser nulo ou vazio.", nameof(name));
+            }
+
+            // Consulta ao repositório
+            var products = await _repository.FindByNameAsync(name);
+
+            // Regra de negócio: garantir que a lista não seja nula
+            if (products == null || !products.Any())
+            {
+                throw new KeyNotFoundException($"Nenhum produto encontrado com o nome: {name}");
+            }
+
+            // Converte para DTO (resposta)
+            return products
+                .Where(product => product != null) // Remove produtos nulos
+                .Select(ProductResponse.FromProductToResponse)
+                .ToList();
+        }
+        catch (ArgumentException ex)
+        {
+            // Log para validação de entrada
+            Console.WriteLine($"Validação de entrada falhou: {ex.Message}");
+            throw;
+        }
+        catch (KeyNotFoundException ex)
+        {
+            // Log para ausência de dados
+            Console.WriteLine($"Nenhum produto encontrado: {ex.Message}");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            // Log para erros inesperados
+            Console.WriteLine($"Erro inesperado no serviço: {ex.Message}");
+            throw;
+        }
+    }
+
+
+
+    public async Task<ProductResponse> FindByIdProduct(int id)
     {
         if (id <= 0)
         {
@@ -78,7 +123,7 @@ public class ProductService : IProductService
     }
 
 
-    public async Task<ProductResponse> UpdateAsync(int id, ProductRequest upRequest)
+    public async Task<ProductResponse> UpdateProduct(int id, ProductRequest upRequest)
     {
         if (id <= 0) throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
         try
@@ -96,7 +141,7 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteProduct(int id)
     {
         if (id <= 0) throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
         try
