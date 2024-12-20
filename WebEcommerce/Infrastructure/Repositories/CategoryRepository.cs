@@ -31,7 +31,6 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
     
     public async Task<Category> FindByIdAsync(int id)
     {
-        
         return await dbContext.Categories
                 .Include(c => c.Products)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -71,4 +70,10 @@ public class CategoryRepository(AppDbContext dbContext) : ICategoryRepository
         dbContext.Categories.Remove(category);
         await dbContext.SaveChangesAsync();
     }
+    
+    public async Task<bool> HasAssociatedProductsAsync(long categoryId)
+    {
+        return await dbContext.Products.AnyAsync(p => p.CategoryId == categoryId);
+    }
+
 }

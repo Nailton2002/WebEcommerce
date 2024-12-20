@@ -21,4 +21,6 @@ public interface ICategoryRepository
     Task<Category> UpdateAsync(Category category);
     
     Task DeleteAsync(Category category);
+
+    Task<bool> HasAssociatedProductsAsync(long categoryId);
 }

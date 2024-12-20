@@ -141,6 +141,7 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             {
                 throw new KeyNotFoundException("Category not found");
             }
+
             //Passa a ativação de verdadeira para falsa
             category.DesableActiveCategory();
             // Atualizada os dados referentes
@@ -154,19 +155,29 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
             throw;
         }
     }
-    
+
     public async Task DeleteDisableCategory(int id)
     {
+        if (id <= 0) throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
         try
         {
             var category = await repository.FindByIdAsync(id);
+            
             if (category == null)
             {
-                throw new KeyNotFoundException("Category not found");
+                throw new KeyNotFoundException("Categoria não encontrada.");
             }
+
             if (category.Active)
             {
-                throw new Exception("Category is active and cannot be deleted");
+                throw new Exception("A categoria está ativa e não pode ser excluída!");
+            }
+            // Verifica se a categoria possui produtos associados
+            var hasProducts = await repository.HasAssociatedProductsAsync(id);
+            
+            if (hasProducts)
+            {
+                throw new InvalidOperationException("Não é possível deletar uma categoria com produtos associados.");
             }
             await repository.DeleteAsync(category);
         }

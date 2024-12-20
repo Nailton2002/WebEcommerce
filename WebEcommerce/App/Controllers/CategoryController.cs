@@ -147,19 +147,28 @@ public class CategoryController(ICategoryService categoryService) : ControllerBa
         }
     }
     
-
-    [HttpDelete("{id:int}")]
-    public async Task<ActionResult> Delete(int id)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCategory(int id)
     {
         try
         {
             await categoryService.FindByIdCategory(id);
             await categoryService.DeleteDisableCategory(id);
-            return NoContent();
+            return NoContent(); // Retorna 204 se a exclusão for bem-sucedida
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { Error = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { Error = ex.Message });
         }
         catch (Exception ex)
         {
-            return StatusCode(500, new { Error = "An unexpected error occurred.", Details = ex.Message });
+            return StatusCode(500, new { Error = "Ocorreu um erro inesperado.", Details = ex.Message });
         }
     }
+
+
 }
